@@ -35,13 +35,13 @@ def extractMatchDetails(soup):
             details["match_days"] = tds[1].text.strip()
 
     if "toss" not in details:
-        details["toss"] = None
+        details["toss"] = ""
 
     if "player_of_the_match" not in details:
-        details["player_of_the_match"] = None
+        details["player_of_the_match"] = ""
 
     if "match_days" not in details:
-        details["match_days"] = None
+        details["match_days"] = ""
 
     return pd.DataFrame([details])
 

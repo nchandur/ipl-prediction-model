@@ -12,7 +12,7 @@ years.sort()
 with open("data/errors.csv", "a") as error:
     error.write("season, link, error\n")
 
-    for season in years[:1]:
+    for season in years[16:]:
         links = seasons[season]
         for link in tqdm(links):
             try: 
