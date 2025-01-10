@@ -7,15 +7,15 @@ import os
 def parseExtras(row):
     res = {
         "byes": 0,
-        "leg_byes": 0, 
+        "leg_byes": 0,
         "no_balls": 0,
         "wides": 0,
         "extras": 0,
         "innings": 0,
         "team": 0,
-        "match_id": 0
+        "match_id": 0,
     }
-    try: 
+    try:
         text = row["dismissal_info"].replace("(", "").replace(")", "")
 
         for m in re.compile(r"^b (\d+)").finditer(text):
@@ -26,7 +26,7 @@ def parseExtras(row):
 
         for m in re.compile(r"nb (\d+)").finditer(text):
             res["no_balls"] = m.group(1)
-        
+
         for m in re.compile(r"w (\d+)").finditer(text):
             res["wides"] = m.group(1)
     except:
@@ -39,6 +39,7 @@ def parseExtras(row):
 
     return res
 
+
 def extractExtras(extras):
     results = []
 
@@ -49,20 +50,20 @@ def extractExtras(extras):
 
     return pd.DataFrame(results)
 
+
 def parseTotal(row):
     res = {
         "overs": 0,
         "run_rate": 0,
-        "total": 0, 
+        "total": 0,
         "wickets": 0,
         "innings": 0,
         "team": 0,
-        "match_id": 0
+        "match_id": 0,
     }
 
     totalWithLoss = re.compile(r"(\d+)\/(\d+)")
     totalNoLoss = re.compile(r"\d+")
-
 
     try:
         for m in re.compile(r"(.+?)Ov").finditer(row["dismissal_info"]):
@@ -83,13 +84,14 @@ def parseTotal(row):
         res["innings"] = row["innings"]
         res["match_id"] = row["match_id"]
         res["team"] = row["team"]
-    
+
     except:
         pass
 
     return res
 
-def extractTotal(total:pd.DataFrame):
+
+def extractTotal(total: pd.DataFrame):
     results = []
     n = len(total)
 
@@ -102,7 +104,19 @@ def extractTotal(total:pd.DataFrame):
 data = pd.read_csv("data/raw/batting.csv")
 
 # rename columns
-data.columns = ["player_name", "dismissal_info", "runs", "balls", "minutes_played", "fours", "sixes", "strike_rate", "innings", "team", "match_id"]
+data.columns = [
+    "player_name",
+    "dismissal_info",
+    "runs",
+    "balls",
+    "minutes_played",
+    "fours",
+    "sixes",
+    "strike_rate",
+    "innings",
+    "team",
+    "match_id",
+]
 
 # remove columns for extras and total
 dropCols = ["player_name", "balls", "minutes_played", "fours", "sixes", "strike_rate"]
@@ -117,16 +131,16 @@ total = extractTotal(total=total)
 extras = extractExtras(extras=extras)
 
 
-data = data[~data['player_name'].isin(["Extras", "Total"])].reset_index(drop=True)
+data = data[~data["player_name"].isin(["Extras", "Total"])].reset_index(drop=True)
 
-data['player_name'] = data['player_name'].str.replace(r'\(c\)', '', regex=True)
-data['player_name'] = data['player_name'].str.replace(r'[^a-zA-Z0-9\s]', '', regex=True)
+data["player_name"] = data["player_name"].str.replace(r"\(c\)", "", regex=True)
+data["player_name"] = data["player_name"].str.replace(r"[^a-zA-Z0-9\s]", "", regex=True)
 data["minutes_played"] = data["minutes_played"].str.replace("-", "", regex=False)
 
 
 data = data.apply(lambda col: col.str.strip() if col.dtype == "object" else col)
 
-destination = "data/processed"
+destination = "data/preprocessed"
 
 if not os.path.exists(destination):
     os.mkdir(destination)
@@ -136,6 +150,21 @@ extras.to_csv(os.path.join(destination, "extras.csv"), index=False)
 data.to_csv(os.path.join(destination, "batting.csv"), index=False)
 
 data = pd.read_csv("data/raw/bowling.csv")
-data.columns = ["player_name", "overs", "m", "runs", "wickets", "econ", "dots", "fours", "sixes", "wides", "no_balls", "innings", "team", "match_id"]
+data.columns = [
+    "player_name",
+    "overs",
+    "m",
+    "runs",
+    "wickets",
+    "econ",
+    "dots",
+    "fours",
+    "sixes",
+    "wides",
+    "no_balls",
+    "innings",
+    "team",
+    "match_id",
+]
 
-data.to_csv("data/processed/bowling.csv", index=False)
+data.to_csv(os.path.join(destination, "bowling.csv"), index=False)

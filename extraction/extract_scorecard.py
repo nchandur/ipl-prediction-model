@@ -11,13 +11,25 @@ def extractMatchDetails(soup):
         "div", class_="ds-text-tight-m ds-font-regular ds-text-typo-mid3"
     ).text
 
+    teams = soup.find(
+        "div", class_="ds-flex ds-flex-col ds-mt-3 md:ds-mt-0 ds-mt-0 ds-mb-1"
+    )
+    teamNames = teams.find_all(
+        "span",
+        class_="ds-text-tight-l ds-font-bold ds-text-typo hover:ds-text-typo-primary ds-block ds-truncate",
+    )
+
     matchdetails = soup.find(
         "table", class_="ds-w-full ds-table ds-table-sm ds-table-auto"
     )
 
     trs = matchdetails.find_all("tr")
 
-    details = {"match_type": matchType.split(", ")[0]}
+    details = {
+        "match_type": matchType.split(", ")[0],
+        "team_1": teamNames[0].text,
+        "team_2": teamNames[1].text,
+    }
 
     for tr in trs:
         tds = tr.find_all("td")
@@ -124,15 +136,14 @@ def extractScorecard(url):
 
     soup = BeautifulSoup(resp.text, "html.parser")
 
-
     details = extractMatchDetails(soup=soup)
     details["match_id"] = matchID
 
-    try: 
+    try:
         bat, bowl = extractStats(soup=soup)
-    except: 
+    except:
         return details, None, None
-    
+
     bat["match_id"] = matchID
     bowl["match_id"] = matchID
 

@@ -47,6 +47,3 @@ linksJSONstr = json.dumps(linksJSON, indent=4)
 
 with open("data/scorecards.json", "w") as file:
     file.write(linksJSONstr)
-
-
-print("\n\nExecution Time: {} minutes".format((perf_counter() - start) / 60))
