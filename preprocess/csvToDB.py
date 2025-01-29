@@ -1,6 +1,4 @@
-import os
 from configparser import ConfigParser
-import psycopg2 as pg
 import pandas as pd
 from sqlalchemy import create_engine
 

@@ -1,6 +1,6 @@
 import pandas as pd
 
-data = pd.read_csv("data/raw/details.csv")
+data = pd.read_csv("data/raw/details.csv", header=None)
 data.columns = [
     "match_type",
     "team_1",

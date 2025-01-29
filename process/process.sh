@@ -11,3 +11,7 @@ sudo -u postgres psql -d ipl -f process/3_total.sql
 sudo -u postgres psql -d ipl -f process/4_extras.sql
 
 sudo -u postgres psql -d ipl -f process/5_details.sql
+
+sudo -u postgres psql -d ipl -f process/6_points.sql
+
+rm -r ./data/preprocessed

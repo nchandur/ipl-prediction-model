@@ -2,7 +2,8 @@ ALTER TABLE details
 ADD COLUMN team_1_id INT,
 ADD COLUMN team_2_id INT,
 ADD COLUMN winner TEXT,
-ADD COLUMN winner_id INT;
+ADD COLUMN winner_id INT,
+ADD COLUMN is_playoff BOOLEAN;
 
 ALTER TABLE details
 ALTER COLUMN date TYPE DATE USING date::DATE;
@@ -29,3 +30,10 @@ UPDATE details
 SET winner_id = teams.team_id
 FROM teams
 WHERE details.winner = teams.team_name;
+
+UPDATE details
+SET is_playoff = 
+    CASE 
+        WHEN match_type ~* '^[0-9].*match' THEN FALSE
+        ELSE TRUE
+    END;

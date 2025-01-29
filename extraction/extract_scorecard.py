@@ -63,6 +63,14 @@ def extractTable(table):
         col.text.strip() for col in table.find("thead").find("tr").find_all("th")
     ]
 
+    if "SR" in columns:
+        idx = columns.index("SR")
+        columns = columns[:idx+1]
+
+    if "NB" in columns:
+        idx = columns.index("NB")
+        columns = columns[:idx+1]
+
     players = table.find("tbody")
 
     trs = players.find_all("tr")
@@ -75,7 +83,11 @@ def extractTable(table):
         if len(tds) >= 2:
             rows.append([td.text.strip() for td in tds])
 
-    columns[0] = "Players"
+    columns[0] = "players"
+
+    trim = len(columns)
+
+    rows = [row[:trim] for row in rows]
 
     data = pd.DataFrame(rows, columns=columns)
 

@@ -101,7 +101,7 @@ def extractTotal(total: pd.DataFrame):
     return pd.DataFrame(results)
 
 
-data = pd.read_csv("data/raw/batting.csv")
+data = pd.read_csv("data/raw/batting.csv", header=None)
 
 # rename columns
 data.columns = [
@@ -149,7 +149,7 @@ total.to_csv(os.path.join(destination, "total.csv"), index=False)
 extras.to_csv(os.path.join(destination, "extras.csv"), index=False)
 data.to_csv(os.path.join(destination, "batting.csv"), index=False)
 
-data = pd.read_csv("data/raw/bowling.csv")
+data = pd.read_csv("data/raw/bowling.csv", header=None)
 data.columns = [
     "player_name",
     "overs",
