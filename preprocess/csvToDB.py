@@ -1,22 +1,10 @@
 from configparser import ConfigParser
 import pandas as pd
 from sqlalchemy import create_engine
+import json
 
-
-def loadConfig(filename="database.ini", section="postgresql"):
-    parser = ConfigParser()
-    parser.read(filename)
-
-    config = {}
-    if parser.has_section(section):
-        params = parser.items(section)
-        for param in params:
-            config[param[0]] = param[1]
-
-    return config
-
-
-config = loadConfig()
+with open("config.json") as file:
+    config = json.load(file)
 
 engine = create_engine(
     "postgresql://{}:{}@{}:{}/{}".format(

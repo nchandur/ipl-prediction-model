@@ -3,7 +3,9 @@ ADD COLUMN team_1_id INT,
 ADD COLUMN team_2_id INT,
 ADD COLUMN winner TEXT,
 ADD COLUMN winner_id INT,
-ADD COLUMN is_playoff BOOLEAN;
+ADD COLUMN is_playoff BOOLEAN,
+ADD COLUMN team_1_pts INT,
+ADD COLUMN team_2_pts INT;
 
 ALTER TABLE details
 ALTER COLUMN date TYPE DATE USING date::DATE;
@@ -37,3 +39,31 @@ SET is_playoff =
         WHEN match_type ~* '^[0-9].*match' THEN FALSE
         ELSE TRUE
     END;
+
+WITH points AS (
+    SELECT
+    match_id,
+    team_id,
+    SUM(pts) AS pts 
+    FROM batting
+    GROUP BY match_id, team_id
+)
+UPDATE details
+SET team_1_pts = pts
+FROM points
+WHERE details.match_id = points.match_id
+AND points.team_id = details.team_1_id;
+
+WITH points AS (
+    SELECT
+    match_id,
+    team_id,
+    SUM(pts) AS pts
+    FROM batting
+    GROUP BY match_id, team_id
+)
+UPDATE details
+SET team_2_pts = pts
+FROM points
+WHERE details.match_id = points.match_id
+AND points.team_id = details.team_2_id;
