@@ -65,11 +65,11 @@ def extractTable(table):
 
     if "SR" in columns:
         idx = columns.index("SR")
-        columns = columns[:idx+1]
+        columns = columns[: idx + 1]
 
     if "NB" in columns:
         idx = columns.index("NB")
-        columns = columns[:idx+1]
+        columns = columns[: idx + 1]
 
     players = table.find("tbody")
 
