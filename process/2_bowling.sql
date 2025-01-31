@@ -42,6 +42,10 @@ SET player_id = players.player_id
 FROM players
 WHERE bowling.player_name = players.player_name;
 
+UPDATE bowling SET team = 'Royal Challengers Bengaluru' WHERE team = 'Royal Challengers Bangalore';
+UPDATE bowling SET team = 'Delhi Capitals' WHERE team = 'Delhi Daredevils';
+UPDATE bowling SET team = 'Punjab Kings' WHERE team = 'Kings XI Punjab';
+
 UPDATE bowling
 SET team_id = teams.team_id
 FROM teams

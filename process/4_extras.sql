@@ -16,6 +16,10 @@ ALTER COLUMN extras TYPE INTEGER USING extras::INTEGER;
 ALTER TABLE extras
 ALTER COLUMN innings TYPE INTEGER USING innings::INTEGER;
 
+UPDATE extras SET team = 'Royal Challengers Bengaluru' WHERE team = 'Royal Challengers Bangalore';
+UPDATE extras SET team = 'Delhi Capitals' WHERE team = 'Delhi Daredevils';
+UPDATE extras SET team = 'Punjab Kings' WHERE team = 'Kings XI Punjab';
+
 UPDATE extras
 SET team_id = teams.team_id
 FROM teams

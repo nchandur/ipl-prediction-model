@@ -34,12 +34,14 @@ SET player_id = players.player_id
 FROM players
 WHERE batting.player_name = players.player_name;
 
+UPDATE batting SET team = 'Royal Challengers Bengaluru' WHERE team = 'Royal Challengers Bangalore';
+UPDATE batting SET team = 'Delhi Capitals' WHERE team = 'Delhi Daredevils';
+UPDATE batting SET team = 'Punjab Kings' WHERE team = 'Kings XI Punjab';
+
 UPDATE batting
 SET team_id = teams.team_id
 FROM teams
 WHERE batting.team = teams.team_name;
-
-CREATE INDEX team_idx ON teams(team_id);
 
 UPDATE batting 
 SET strike_rate = CASE 

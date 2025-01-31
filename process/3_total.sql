@@ -20,6 +20,10 @@ ALTER COLUMN wickets TYPE INTEGER USING wickets::INTEGER;
 ALTER TABLE total
 ALTER COLUMN innings TYPE INTEGER USING innings::INTEGER;
 
+UPDATE total SET team = 'Royal Challengers Bengaluru' WHERE team = 'Royal Challengers Bangalore';
+UPDATE total SET team = 'Delhi Capitals' WHERE team = 'Delhi Daredevils';
+UPDATE total SET team = 'Punjab Kings' WHERE team = 'Kings XI Punjab';
+
 UPDATE total
 SET team_id = teams.team_id
 FROM teams

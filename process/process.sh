@@ -15,3 +15,5 @@ sudo -u postgres psql -d ipl -f process/5_details.sql
 sudo -u postgres psql -d ipl -f process/6_points.sql
 
 rm -r ./data/preprocessed
+
+python3 -m process.elo

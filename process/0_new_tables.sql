@@ -11,8 +11,9 @@ FROM (
     SELECT player_name FROM bowling
 ) AS combined_players;
 
+UPDATE players SET player_name = TRIM(player_name);
+
 CREATE TABLE teams (
-    team_id SERIAL PRIMARY KEY,
     team_name TEXT UNIQUE
 );
 
@@ -20,7 +21,12 @@ INSERT INTO teams (team_name)
 SELECT DISTINCT team
 FROM batting;
 
-ALTER TABLE teams ADD COLUMN team_abbrev TEXT;
+UPDATE teams SET team_name = TRIM(team_name);
+DELETE FROM teams WHERE team_name IN ('Royal Challengers Bangalore', 'Delhi Daredevils', 'Kings XI Punjab');
+
+ALTER TABLE teams 
+ADD COLUMN team_id SERIAL,
+ADD COLUMN team_abbrev TEXT;
 
 UPDATE teams
 SET team_abbrev = UPPER(
