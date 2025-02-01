@@ -1,3 +1,4 @@
 data/
 config.json
 .ipl/
+__pycache__/

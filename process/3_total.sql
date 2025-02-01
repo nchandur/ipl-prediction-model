@@ -1,9 +1,12 @@
 ALTER TABLE total
 ADD COLUMN team_id INT,
+ADD COLUMN balls INT,
 ADD COLUMN winner BOOLEAN;
 
 ALTER TABLE total
 ALTER COLUMN overs TYPE DECIMAL(10, 1) USING overs::DECIMAL(10, 1);
+
+UPDATE total SET balls = (FLOOR(overs) * 6) + ((overs - FLOOR(overs)) * 10);  
 
 UPDATE total
 SET run_rate = SUBSTRING(run_rate FROM '^[^,]+');
@@ -23,6 +26,7 @@ ALTER COLUMN innings TYPE INTEGER USING innings::INTEGER;
 UPDATE total SET team = 'Royal Challengers Bengaluru' WHERE team = 'Royal Challengers Bangalore';
 UPDATE total SET team = 'Delhi Capitals' WHERE team = 'Delhi Daredevils';
 UPDATE total SET team = 'Punjab Kings' WHERE team = 'Kings XI Punjab';
+UPDATE total SET overs = balls / 6;
 
 UPDATE total
 SET team_id = teams.team_id

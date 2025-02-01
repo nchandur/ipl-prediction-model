@@ -11,7 +11,7 @@ team_1_elo_list = []
 team_2_elo_list = []
 
 for index, row in tqdm(
-    data.iterrows(), total=data.shape[0], desc="Calculating Elo", unit="row"
+    data.iterrows(), total=data.shape[0], desc="Calculating Elo", unit="game"
 ):
     team_1 = row["team_1_id"]
     team_2 = row["team_2_id"]

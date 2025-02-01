@@ -1,7 +1,8 @@
 ALTER TABLE batting
 ADD COLUMN player_id INT,
 ADD COLUMN team_id INT,
-ADD COLUMN pts INT;
+ADD COLUMN pts INT,
+ADD COLUMN date DATE;
 
 ALTER TABLE batting
 ALTER COLUMN innings TYPE INTEGER USING innings::INTEGER;
@@ -42,6 +43,11 @@ UPDATE batting
 SET team_id = teams.team_id
 FROM teams
 WHERE batting.team = teams.team_name;
+
+UPDATE batting
+SET date = details.date::DATE
+FROM details
+WHERE batting.match_id = details.match_id;
 
 UPDATE batting 
 SET strike_rate = CASE 
