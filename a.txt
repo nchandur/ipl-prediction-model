@@ -1,9 +1,0 @@
-SELECT 
-    date, 
-    CASE 
-        WHEN team_1_id = 15 THEN team_1_elo
-        WHEN team_2_id = 15 THEN team_2_elo
-    END AS feature
-FROM performance_indices
-WHERE (team_1_id = 15 OR team_2_id = 15) AND season = 2024
-ORDER BY date;
