@@ -1,7 +1,6 @@
 ALTER TABLE batting
 ADD COLUMN player_id INT,
 ADD COLUMN team_id INT,
-ADD COLUMN pts INT,
 ADD COLUMN date DATE;
 
 ALTER TABLE batting
@@ -54,16 +53,3 @@ SET strike_rate = CASE
     WHEN balls = 0 THEN 0 
     ELSE (runs * 100) / balls 
 END;
-
-UPDATE batting SET pts = runs + fours + (2 * sixes);
-UPDATE batting SET pts = pts + 4 WHERE runs >= 30 AND runs < 50;
-UPDATE batting SET pts = pts + 8 WHERE runs >= 50 AND runs < 100;
-UPDATE batting SET pts = pts + 16 WHERE runs > 100;
-UPDATE batting SET pts = pts - 2 WHERE runs = 0 AND balls > 0;
-
-UPDATE batting SET pts = pts + 6 WHERE (strike_rate >= 170) AND balls >= 10;
-UPDATE batting SET pts = pts + 4 WHERE (strike_rate >= 150 AND strike_rate < 170) AND balls >= 10;
-UPDATE batting SET pts = pts + 2 WHERE (strike_rate >= 130 AND strike_rate < 150) AND balls >= 10;
-UPDATE batting SET pts = pts - 2 WHERE (strike_rate >= 60 AND strike_rate < 70) AND balls >= 10;
-UPDATE batting SET pts = pts - 4 WHERE (strike_rate >= 50 AND strike_rate < 60) AND balls >= 10;
-UPDATE batting SET pts = pts - 6 WHERE (strike_rate < 50) AND balls >= 10;

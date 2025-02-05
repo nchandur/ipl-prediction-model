@@ -43,6 +43,4 @@ for _, group in tqdm(groups, desc="Calculating Bowling Average", unit="player"):
     data.loc[group.index, 'runs_idx'] = cumulative_runs_conceded / innings
     data.loc[group.index, 'strike_rate_over_time'] = cumulative_balls / cumulative_wickets
 
-data = data.fillna(value=0).round(4)
-
 pushToDB(data=data, tablename="bowling")

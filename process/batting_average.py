@@ -38,6 +38,4 @@ for _, group in tqdm(groups, desc="Calculating Batting Average", unit="player"):
     data.loc[group.index, 'runs_without_boundary'] = (cumulative_runs - cumulative_boundaries) / innings
     data.loc[group.index, 'big_impact_idx'] = ((2 * cumulative_100) + cumulative_50) / innings
 
-data = data.fillna(value=0).round(4)
-
 pushToDB(data=data, tablename="batting")

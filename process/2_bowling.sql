@@ -2,7 +2,6 @@ ALTER TABLE bowling
 ADD COLUMN player_id INT,
 ADD COLUMN team_id INT,
 ADD COLUMN balls INT,
-ADD COLUMN pts INT,
 ADD COLUMN date DATE;
 
 ALTER TABLE bowling
@@ -64,16 +63,3 @@ SET econ = CASE
     WHEN balls = 0 THEN 0 
     ELSE (runs * 6) / balls 
 END;
-
-UPDATE bowling SET pts = 25 * wickets;
-UPDATE bowling SET pts = pts + 4 WHERE wickets = 3;
-UPDATE bowling SET pts = pts + 8 WHERE wickets = 4;
-UPDATE bowling SET pts = pts + 16 WHERE wickets = 5;
-UPDATE bowling SET pts = pts + (12 * m);
-
-UPDATE bowling SET pts = pts + 6 WHERE econ < 5 AND balls >= 12;
-UPDATE bowling SET pts = pts + 4 WHERE (econ >= 5 AND econ < 6) AND balls >= 12;
-UPDATE bowling SET pts = pts + 2 WHERE (econ >= 6 AND econ < 7) AND balls >= 12;
-UPDATE bowling SET pts = pts - 2 WHERE (econ >= 10 AND econ < 11) AND balls >= 12;
-UPDATE bowling SET pts = pts - 4 WHERE (econ >= 11 AND econ < 12) AND balls >= 12;
-UPDATE bowling SET pts = pts - 6 WHERE (econ >= 12) AND balls >= 12;

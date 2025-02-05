@@ -34,18 +34,18 @@ for index, row in tqdm(
 
     if diff >= 40:
         if winner == strong_team:
-            elo_ratings[strong_team] = strong_elo + 10
-            elo_ratings[weak_team] = weak_elo - 10
+            elo_ratings[strong_team] = strong_elo + 1
+            elo_ratings[weak_team] = weak_elo - 1
         else:
-            elo_ratings[weak_team] = weak_elo + 90
-            elo_ratings[strong_team] = strong_elo - 90
+            elo_ratings[weak_team] = weak_elo + 9
+            elo_ratings[strong_team] = strong_elo - 9
     else:
         if winner == team_1:
-            elo_ratings[team_1] = elo_1 + 50
-            elo_ratings[team_2] = elo_2 - 50
+            elo_ratings[team_1] = elo_1 + 5
+            elo_ratings[team_2] = elo_2 - 5
         else:
-            elo_ratings[team_2] = elo_2 + 50
-            elo_ratings[team_1] = elo_1 - 50
+            elo_ratings[team_2] = elo_2 + 5
+            elo_ratings[team_1] = elo_1 - 5
 
 data["team_1_elo"] = team_1_elo_list
 data["team_2_elo"] = team_2_elo_list
@@ -56,15 +56,13 @@ data = data[
         "date",
         "season",
         "team_1_id",
-        "team_1",
-        "team_1_pts",
-        "team_1_elo",
         "team_2_id",
-        "team_2",
-        "team_2_pts",
-        "team_2_elo",
         "winner_id",
+        "team_1",
+        "team_2",
         "winner",
+        "team_1_elo",
+        "team_2_elo",
     ]
 ]
 
