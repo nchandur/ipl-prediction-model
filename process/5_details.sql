@@ -3,7 +3,8 @@ ADD COLUMN team_1_id INT,
 ADD COLUMN team_2_id INT,
 ADD COLUMN winner TEXT,
 ADD COLUMN winner_id INT,
-ADD COLUMN is_playoff BOOLEAN;
+ADD COLUMN is_playoff BOOLEAN,
+ADD COLUMN stadium_id INT;
 
 ALTER TABLE details
 ALTER COLUMN date TYPE DATE USING date::DATE;
@@ -101,3 +102,8 @@ SET team_2_pts = team_2_pts + pts
 FROM points
 WHERE details.match_id = points.match_id
 AND points.team_id = details.team_2_id;
+
+UPDATE details
+SET stadium_id = stadiums.stadium_id
+FROM stadiums
+WHERE details.stadium = stadiums.stadium_name;

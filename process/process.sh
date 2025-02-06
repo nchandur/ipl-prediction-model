@@ -31,7 +31,6 @@ python3 -m process.batting_average
 
 python3 -m process.bowling_average
 
-echo "Processing Elo"
 sudo -u postgres psql -d ipl -f process/7_elo.sql > /dev/null 2>&1
 
 python3 -m process.perf_indices

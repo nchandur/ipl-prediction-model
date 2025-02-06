@@ -1,7 +1,7 @@
 from utils.utils import retrieveFromDB, pushToDB
 from tqdm import tqdm
 
-query = "SELECT * FROM details ORDER BY date"
+query = "SELECT * FROM details WHERE winner IS NOT NULL ORDER BY date"
 
 data = retrieveFromDB(query=query)
 
@@ -50,4 +50,4 @@ for index, row in tqdm(
 data["team_1_elo"] = team_1_elo_list
 data["team_2_elo"] = team_2_elo_list
 
-pushToDB(data=data, tablename="details")
+pushToDB(data=data, tablename="matches")

@@ -2,7 +2,7 @@ import pandas as pd
 from utils.utils import *
     
 
-data = retrieveFromDB(query="SELECT * FROM details")
+data = retrieveFromDB(query="SELECT * FROM matches ORDER BY date")
 
 data = data.sort_values('date')
 
@@ -92,4 +92,4 @@ data['team_2_stadium_win_pct'] = team_2_stadium_win_pct
 data['team_1_h2h_stadium_win_pct'] = team_1_h2h_stadium_win_pct
 data['team_2_h2h_stadium_win_pct'] = team_2_h2h_stadium_win_pct
 
-pushToDB(data=data, tablename="details")
+pushToDB(data=data, tablename="matches")
