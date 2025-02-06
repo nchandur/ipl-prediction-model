@@ -33,3 +33,14 @@ SET team_abbrev = UPPER(
     (SELECT string_agg(SUBSTRING(word, 1, 1), '')
      FROM regexp_split_to_table(team_name, '\s+') AS word)
 );
+
+UPDATE details SET stadium = REPLACE(stadium, 'Bangalore', 'Bengaluru') WHERE stadium ILIKE '%bangalore%';
+
+CREATE TABLE stadiums (
+    stadium_id SERIAL PRIMARY KEY, 
+    stadium_name TEXT
+);
+
+INSERT INTO stadiums (stadium_name)
+SELECT DISTINCT stadium
+FROM details;

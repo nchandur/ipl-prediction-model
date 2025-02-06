@@ -92,10 +92,10 @@ def calculate_performance_indices(data):
 
     return data
 
-data = retrieveFromDB(query="SELECT * FROM elo_ratings")
+data = retrieveFromDB(query="SELECT * FROM details")
 data = calculate_cumulative_stats(data=data)
 data = calculate_performance_indices(data=data)
 
 data = data.round(4)
 
-pushToDB(data=data, tablename="elo_ratings")
+pushToDB(data=data, tablename="details")

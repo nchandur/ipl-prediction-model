@@ -3,9 +3,7 @@ ADD COLUMN team_1_id INT,
 ADD COLUMN team_2_id INT,
 ADD COLUMN winner TEXT,
 ADD COLUMN winner_id INT,
-ADD COLUMN is_playoff BOOLEAN,
-ADD COLUMN team_1_pts INT,
-ADD COLUMN team_2_pts INT;
+ADD COLUMN is_playoff BOOLEAN;
 
 ALTER TABLE details
 ALTER COLUMN date TYPE DATE USING date::DATE;
