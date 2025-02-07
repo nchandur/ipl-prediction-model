@@ -1,10 +1,10 @@
 import pandas as pd
 from utils.utils import *
-    
+
 
 data = retrieveFromDB(query="SELECT * FROM matches ORDER BY date")
 
-data = data.sort_values('date')
+data = data.sort_values("date")
 
 win_count, game_count = {}, {}
 h2h_wins, h2h_games = {}, {}
@@ -17,8 +17,13 @@ team_1_stadium_win_pct, team_2_stadium_win_pct = [], []
 team_1_h2h_stadium_win_pct, team_2_h2h_stadium_win_pct = [], []
 
 for _, row in data.iterrows():
-    team1, team2, winner, stadium = row['team_1_id'], row['team_2_id'], row['winner_id'], row['stadium']
-    
+    team1, team2, winner, stadium = (
+        row["team_1_id"],
+        row["team_2_id"],
+        row["winner_id"],
+        row["stadium"],
+    )
+
     t1_win_pct = win_count.get(team1, 0) / game_count.get(team1, 1)
     t2_win_pct = win_count.get(team2, 0) / game_count.get(team2, 1)
     team_1_win_pct.append(t1_win_pct)
@@ -77,19 +82,25 @@ for _, row in data.iterrows():
     elif winner == team2:
         stadium_wins[team2_stadium_key] = stadium_wins.get(team2_stadium_key, 0) + 1
 
-    h2h_stadium_games[h2h_stadium_matchup] = h2h_stadium_games.get(h2h_stadium_matchup, 0) + 1
+    h2h_stadium_games[h2h_stadium_matchup] = (
+        h2h_stadium_games.get(h2h_stadium_matchup, 0) + 1
+    )
     if winner == team1:
-        h2h_stadium_wins[(team1, team2, stadium)] = h2h_stadium_wins.get((team1, team2, stadium), 0) + 1
+        h2h_stadium_wins[(team1, team2, stadium)] = (
+            h2h_stadium_wins.get((team1, team2, stadium), 0) + 1
+        )
     elif winner == team2:
-        h2h_stadium_wins[(team2, team1, stadium)] = h2h_stadium_wins.get((team2, team1, stadium), 0) + 1
+        h2h_stadium_wins[(team2, team1, stadium)] = (
+            h2h_stadium_wins.get((team2, team1, stadium), 0) + 1
+        )
 
-data['team_1_win_pct'] = team_1_win_pct
-data['team_2_win_pct'] = team_2_win_pct
-data['team_1_h2h_win_pct'] = team_1_h2h_win_pct
-data['team_2_h2h_win_pct'] = team_2_h2h_win_pct
-data['team_1_stadium_win_pct'] = team_1_stadium_win_pct
-data['team_2_stadium_win_pct'] = team_2_stadium_win_pct
-data['team_1_h2h_stadium_win_pct'] = team_1_h2h_stadium_win_pct
-data['team_2_h2h_stadium_win_pct'] = team_2_h2h_stadium_win_pct
+data["team_1_win_pct"] = team_1_win_pct
+data["team_2_win_pct"] = team_2_win_pct
+data["team_1_h2h_win_pct"] = team_1_h2h_win_pct
+data["team_2_h2h_win_pct"] = team_2_h2h_win_pct
+data["team_1_stadium_win_pct"] = team_1_stadium_win_pct
+data["team_2_stadium_win_pct"] = team_2_stadium_win_pct
+data["team_1_h2h_stadium_win_pct"] = team_1_h2h_stadium_win_pct
+data["team_2_h2h_stadium_win_pct"] = team_2_h2h_stadium_win_pct
 
 pushToDB(data=data, tablename="matches")

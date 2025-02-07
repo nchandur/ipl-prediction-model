@@ -18,10 +18,12 @@ sudo -u postgres psql -d ipl -f process/4_extras.sql > /dev/null 2>&1
 echo "Processing Details"
 sudo -u postgres psql -d ipl -f process/5_details.sql > /dev/null 2>&1
 
-echo "Processing Points"
-sudo -u postgres psql -d ipl -f process/6_points.sql > /dev/null 2>&1
-
 rm -r ./data/preprocessed
+
+python3 -m process.ratings
+
+echo "Processing Matches"
+sudo -u postgres psql -d ipl -f process/6_matches.sql > /dev/null 2>&1
 
 python3 -m process.elo
 
@@ -30,7 +32,5 @@ python3 -m process.win_percentage
 python3 -m process.batting_average
 
 python3 -m process.bowling_average
-
-sudo -u postgres psql -d ipl -f process/7_elo.sql > /dev/null 2>&1
 
 python3 -m process.perf_indices

@@ -10,5 +10,3 @@ echo "Processing match details..."
 python3 preprocess/details.py
 
 python3 preprocess/csvToDB.py
-
-echo "Preprocessing Complete!"
