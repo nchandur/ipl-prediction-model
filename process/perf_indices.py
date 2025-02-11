@@ -149,7 +149,7 @@ def calculate_performance_indices(data):
         data["team_1_cumulative_boundaries_conceded"]
         / data["team_1_cumulative_matches_played"]
     )
-    data["team_1_boundary_inv_idx"] = (
+    data["team_2_boundary_inv_idx"] = (
         data["team_2_cumulative_boundaries_conceded"]
         / data["team_2_cumulative_matches_played"]
     )

@@ -17,7 +17,7 @@ def get_team_data(id: int, feature: str) -> pd.DataFrame:
         END AS feature
     FROM matches
     WHERE (team_1_id = {} OR team_2_id = {})
-    AND season = 2024
+    AND season >= 2024
     ORDER BY date;
     """.format(
         id, id, id, feature, id, feature, id, id
@@ -29,8 +29,8 @@ def get_team_data(id: int, feature: str) -> pd.DataFrame:
     return data
 
 
-team_ids = [15, 12]
-feature = "elo"
+team_ids = [15, 6]
+feature = "boundary_inv_idx"
 
 teams = [get_team_data(id, feature=feature) for id in team_ids]
 
@@ -39,7 +39,7 @@ fig = go.Figure()
 for idx, data in enumerate(teams):
     fig.add_trace(
         go.Scatter(
-            x=data["date"], y=data["feature"], mode="lines", name=data["team"].iloc[0]
+            x=data["date"], y=data["feature"], mode="lines+markers", name=data["team"].iloc[0]
         )
     )
 
