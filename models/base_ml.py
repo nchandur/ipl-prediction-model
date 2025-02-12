@@ -3,21 +3,25 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
-data = retrieveFromDB(query="SELECT team_1_win_pct, team_2_win_pct, team_1_h2h_win_pct, team_2_h2h_win_pct, team_1_victory FROM matches ORDER BY date")
+def fit_model():
 
-train, test = train_test_split(data, test_size=0.05, random_state=42)
+    data = retrieveFromDB(query="SELECT team_1_win_pct, team_2_win_pct, team_1_h2h_win_pct, team_2_h2h_win_pct, team_1_victory FROM matches ORDER BY date")
 
-cols = data.columns.to_list()
+    train, test = train_test_split(data, test_size=0.05, random_state=42)
 
-features = cols[:-1]
-label = cols[-1]
+    cols = data.columns.to_list()
 
-model = DecisionTreeClassifier(criterion="gini", random_state=42)
+    features = cols[:-1]
+    label = cols[-1]
 
-model.fit(train[features], train[label])
+    model = DecisionTreeClassifier(criterion="gini", random_state=42)
 
-pred = model.predict(test[features])
+    model.fit(train[features], train[label])
 
-report = classification_report(pred, test[label])
+    pred = model.predict(test[features])
 
-print(report)
+    report = classification_report(pred, test[label])
+
+    print(report)
+
+    return model

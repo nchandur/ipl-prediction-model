@@ -1,9 +1,9 @@
 from utils.utils import *
-import xgboost as xgb
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report
-
+import numpy as np
 
 def convert_to_features(features:list) -> list:
     res = ["team_1_{}".format(feature) for feature in features]
@@ -22,17 +22,22 @@ cumulative = convert_to_features(["cumulative_runs_scored", "cumulative_runs_con
 features = indices + win_pcts + cumulative
 label = "team_1_victory"
 
-data = data[features + [label]]
-
 data[features] = StandardScaler().fit_transform(data[features])
+
+data = data[features + [label]]
 
 train, test = train_test_split(data, test_size=0.1, random_state=42)
 
-model = xgb.XGBClassifier(objective="binary:logistic", eval_metric="logloss", random_state=42)
+model = LogisticRegression()
+model.fit(data[features], data[label])
 
-model.fit(train[features], train[label])
+res = pd.DataFrame()
+res["features"] = model.feature_names_in_
+res["coef"] = np.abs(model.coef_[0])
 
-pred = model.predict(test[features])
-report = classification_report(pred, test[label])
 
-print(report)
+coef = res.sort_values(by=["coef"], ascending=False)
+
+coef = coef[coef["coef"] >= 0.3]
+
+print(list(coef["features"].values))
