@@ -1,5 +1,4 @@
 ALTER TABLE matches
-ADD COLUMN team_1_victory BOOLEAN,
 ADD COLUMN team_1_total INT,
 ADD COLUMN team_2_total INT,
 ADD COLUMN team_1_wickets INT,
@@ -12,9 +11,6 @@ ADD COLUMN team_1_boundaries INT,
 ADD COLUMN team_2_boundaries INT,
 ADD COLUMN team_1_balls INT,
 ADD COLUMN team_2_balls INT;
-
-UPDATE matches SET team_1_victory = TRUE WHERE team_1_id = winner_id;
-UPDATE matches SET team_1_victory = FALSE WHERE team_2_id = winner_id;
 
 UPDATE matches SET team_1_total = total.total FROM total WHERE matches.match_id = total.match_id AND matches.team_1_id = total.team_id;
 UPDATE matches SET team_2_total = total.total FROM total WHERE matches.match_id = total.match_id AND matches.team_2_id = total.team_id;
