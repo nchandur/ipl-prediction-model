@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Match{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'css/match.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1>Match View</h1>
+
+<form action="/match" method="POST">
+    {% csrf_token %}
+
+    <label for="team_1">Team 1:</label>
+    <input type="text" id="team_1" name="team_1" required><br><br>
+
+    <label for="email">Team 2:</label>
+    <input type="text" id="team_2" name="team_2" required><br><br>
+
+    <input type="submit" value="Submit">
+</form>
+
+{% if team_1 and team_2 %}
+
+<h2>Team 1: {{ team_1 }}</h2>
+<h2>Team 2: {{ team_2 }}</h2>
+
+{% endif %}
+
+
+{% endblock %}
