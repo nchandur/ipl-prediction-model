@@ -24,12 +24,13 @@
     <input type="submit" value="Submit">
 </form>
 
-{% if team_1 and team_2 %}
-
-<h2>Team 1: {{ team_1 }}</h2>
-<h2>Team 2: {{ team_2 }}</h2>
-
+{% if output %}
+    <ul>
+        {% for key, value in output.items %}
+            <li>{{ key }}: {{ value }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No output available.</p>
 {% endif %}
-
-
 {% endblock %}
